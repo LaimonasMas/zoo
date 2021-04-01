@@ -86,6 +86,10 @@ class SpecieController extends Controller
      */
     public function destroy(Specie $specie)
     {
+
+        if($specie->specieManagers->count()){
+            return 'Trinti negalima, nes turi priskirtu priziuretoju.';
+        }
         $specie->delete();
         return redirect()->route('specie.index');
     }

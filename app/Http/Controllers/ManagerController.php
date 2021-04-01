@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Manager;
+use App\Models\Specie;
 use Illuminate\Http\Request;
 
 class ManagerController extends Controller
@@ -14,7 +15,8 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        //
+        $managers = Manager::all();
+        return view('manager.index', ['managers' => $managers]);
     }
 
     /**
@@ -24,7 +26,8 @@ class ManagerController extends Controller
      */
     public function create()
     {
-        return view('manager.create');
+        $species = Specie::all();
+        return view('manager.create', ['species' => $species]);
     }
 
     /**
@@ -35,7 +38,12 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $manager = new Manager;
+        $manager->name = $request->manager_name;
+        $manager->surname = $request->manager_surname;
+        $manager->specie_id = $request->specie_id;
+        $manager->save();
+        return redirect()->route('manager.index');
     }
 
     /**
@@ -57,7 +65,8 @@ class ManagerController extends Controller
      */
     public function edit(Manager $manager)
     {
-        //
+        $species = Specie::all();
+        return view('manager.edit', ['manager' => $manager, 'species' => $species]);
     }
 
     /**
@@ -69,7 +78,11 @@ class ManagerController extends Controller
      */
     public function update(Request $request, Manager $manager)
     {
-        //
+        $manager->name = $request->manager_name;
+        $manager->surname = $request->manager_surname;
+        $manager->specie_id = $request->specie_id;
+        $manager->save();
+        return redirect()->route('manager.index');
     }
 
     /**
@@ -80,6 +93,7 @@ class ManagerController extends Controller
      */
     public function destroy(Manager $manager)
     {
-        //
+        $manager->delete();
+        return redirect()->route('manager.index');
     }
 }
