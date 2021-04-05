@@ -13,4 +13,8 @@ class Specie extends Model
         return $this->hasMany('App\Models\Manager', 'specie_id', 'id');
     }
  
+    public function specieAnimals()
+    {
+        return $this->hasMany('App\Models\Animals', 'specie_id', 'id');
+    }
 }
