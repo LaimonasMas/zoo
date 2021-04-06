@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\Specie;
+use App\Models\Manager;
 use Illuminate\Http\Request;
 
 class AnimalController extends Controller
@@ -14,7 +16,9 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        //
+        $animals = Animal::all();
+        $managers = Manager::all();
+        return view('animal.index', ['animals' => $animals, 'managers' => $managers]);
     }
 
     /**
@@ -24,7 +28,9 @@ class AnimalController extends Controller
      */
     public function create()
     {
-        //
+        $species = Specie::all();
+        $managers = Manager::all();
+        return view('animal.create', ['species' => $species, 'managers' => $managers]);
     }
 
     /**
@@ -35,7 +41,14 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $animal = new Animal;
+        $animal->name = $request->animal_name;
+        $animal->birth_year = $request->birth_year;
+        $animal->animal_book = $request->animal_book;
+        $animal->specie_id = $request->specie_id;
+        $animal->manager_id = $request->manager_id;
+        $animal->save();
+        return redirect()->route('animal.index');
     }
 
     /**
@@ -57,7 +70,9 @@ class AnimalController extends Controller
      */
     public function edit(Animal $animal)
     {
-        //
+        $species = Specie::all();
+        $managers = Manager::all();
+        return view('animal.edit', ['animal' => $animal, 'species' => $species, 'managers' => $managers]);
     }
 
     /**
@@ -69,7 +84,13 @@ class AnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
-        //
+        $animal->name = $request->animal_name;
+        $animal->birth_year = $request->birth_year;
+        $animal->animal_book = $request->animal_book;
+        $animal->specie_id = $request->specie_id;
+        $animal->manager_id = $request->manager_id;
+        $animal->save();
+        return redirect()->route('animal.index');
     }
 
     /**
