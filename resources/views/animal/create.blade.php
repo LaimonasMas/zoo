@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <label>Animaml book: </label>
-                            <input type="text" class="form-control" name="animal_book">
+                             <textarea type="text" class="form-control" id="summernote" name="animal_book"></textarea>
                             <small class="form-text text-muted">You can enter Information here</small>
                         </div>
                         <div class="form-group">
@@ -50,4 +50,9 @@
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function() {
+   $('#summernote').summernote();
+ });
+</script>
 @endsection

@@ -43,7 +43,7 @@ class ManagerController extends Controller
         $manager->surname = $request->manager_surname;
         $manager->specie_id = $request->specie_id;
         $manager->save();
-        return redirect()->route('manager.index');
+        return redirect()->route('manager.index')->with('success_message', 'Created successfully.');
     }
 
     /**
@@ -82,7 +82,7 @@ class ManagerController extends Controller
         $manager->surname = $request->manager_surname;
         $manager->specie_id = $request->specie_id;
         $manager->save();
-        return redirect()->route('manager.index');
+        return redirect()->route('manager.index')->with('success_message', 'Updated successfully.');
     }
 
     /**
@@ -94,6 +94,6 @@ class ManagerController extends Controller
     public function destroy(Manager $manager)
     {
         $manager->delete();
-        return redirect()->route('manager.index');
+        return redirect()->route('manager.index')->with('success_message', 'Deleted successfully.');
     }
 }

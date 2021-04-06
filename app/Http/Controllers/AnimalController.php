@@ -48,7 +48,8 @@ class AnimalController extends Controller
         $animal->specie_id = $request->specie_id;
         $animal->manager_id = $request->manager_id;
         $animal->save();
-        return redirect()->route('animal.index');
+        return redirect()->route('animal.index')->with('success_message', 'Created successfully.');
+
     }
 
     /**
@@ -90,7 +91,7 @@ class AnimalController extends Controller
         $animal->specie_id = $request->specie_id;
         $animal->manager_id = $request->manager_id;
         $animal->save();
-        return redirect()->route('animal.index');
+        return redirect()->route('animal.index')->with('success_message', 'Updated successfully.');
     }
 
     /**
@@ -102,6 +103,6 @@ class AnimalController extends Controller
     public function destroy(Animal $animal)
     {
         $animal->delete();
-        return redirect()->route('animal.index');
+        return redirect()->route('animal.index')->with('success_message', 'Deleted successfully.');
     }
 }

@@ -39,7 +39,7 @@ class SpecieController extends Controller
         $specie = new Specie;
         $specie->name = $request->specie_name;
         $specie->save();
-        return redirect()->route('specie.index');
+        return redirect()->route('specie.index')->with('success_message', 'Created successfully.');
     }
 
     /**
@@ -75,7 +75,7 @@ class SpecieController extends Controller
     {
         $specie->name = $request->specie_name;
         $specie->save();
-        return redirect()->route('specie.index');
+        return redirect()->route('specie.index')->with('success_message', 'Updated successfully.');
     }
 
     /**
@@ -88,9 +88,10 @@ class SpecieController extends Controller
     {
 
         if($specie->specieManagers->count()){
-            return 'Trinti negalima, nes turi priskirtu priziuretoju.';
+            return 'Could not delete, because specie still has managers or animals.';
         }
         $specie->delete();
-        return redirect()->route('specie.index');
+        return redirect()->route('specie.index')->with('info_message', 'Could not delete, because specie still has managers or animals');
+
     }
 }
