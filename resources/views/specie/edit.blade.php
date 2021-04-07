@@ -12,7 +12,7 @@
                     <form method="POST" action="{{route('specie.update',[$specie->id])}}">
                         <div class="form-group">
                             <label>Name: </label>
-                            <input type="text" class="form-control" name="specie_name" value="{{$specie->name}}">
+                            <input type="text" class="form-control" name="specie_name" value="{{old('specie_name',$specie->name)}}">
                             <small class="form-text text-muted">You can edit Name here</small>
                         </div>
                         @csrf

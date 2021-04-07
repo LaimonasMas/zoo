@@ -12,17 +12,17 @@
                     <form method="POST" action="{{route('animal.update', [$animal])}}">
                         <div class="form-group">
                             <label>Name: </label>
-                            <input type="text" class="form-control" name="animal_name" value="{{$animal->name}}">
+                            <input type="text" class="form-control" name="animal_name" value="{{old('animal_name',$animal->name)}}">
                             <small class="form-text text-muted">You can enter Name here</small>
                         </div>
                         <div class="form-group">
                             <label>Birth year: </label>
-                            <input type="text" class="form-control" name="birth_year" value="{{$animal->birth_year}}">
+                            <input type="text" class="form-control" name="birth_year" value="{{old('birth_year',$animal->birth_year)}}">
                             <small class="form-text text-muted">You can enter Year here</small>
                         </div>
                         <div class="form-group">
                             <label>Animaml book: </label>
-                            <textarea type="text" class="form-control" name="animal_book" id="summernote"></textarea>
+                            <textarea type="text" class="form-control" name="animal_book" id="summernote">{{old('animal_book',$animal->animal_book)}}</textarea>
                             <small class="form-text text-muted">You can enter Information here</small>
                         </div>
                         <div class="form-group">

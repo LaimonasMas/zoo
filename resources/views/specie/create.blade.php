@@ -12,7 +12,7 @@
                     <form method="POST" action="{{route('specie.store')}}">
                         <div class="form-group">
                             <label>Name: </label>
-                            <input type="text" class="form-control" name="specie_name">
+                            <input type="text" class="form-control" name="specie_name" value="{{old('specie_name')}}">
                             <small class="form-text text-muted">You can enter Name here</small>
                         </div>
                         @csrf

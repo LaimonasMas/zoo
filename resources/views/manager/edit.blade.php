@@ -12,12 +12,12 @@
                     <form method="POST" action="{{route('manager.update',[$manager])}}">
                         <div class="form-group">
                             <label>Name: </label>
-                            <input type="text" class="form-control" name="manager_name" value="{{$manager->name}}">
+                            <input type="text" class="form-control" name="manager_name" value="{{old('manager_name',$manager->name)}}">
                             <small class="form-text text-muted">You can edit Name here</small>
                         </div>
                         <div class="form-group">
                             <label>Surname: </label>
-                            <input type="text" class="form-control" name="manager_surname" value="{{$manager->surname}}">
+                            <input type="text" class="form-control" name="manager_surname" value="{{old('manager_surname',$manager->surname)}}">
                             <small class="form-text text-muted">You can edit Surname here</small>
                         </div>
                         <div class="form-group">

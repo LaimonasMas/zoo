@@ -12,12 +12,12 @@
                     <form method="POST" action="{{route('manager.store')}}">
                         <div class="form-group">
                             <label>Name: </label>
-                            <input type="text" class="form-control" name="manager_name">
+                            <input type="text" class="form-control" name="manager_name" value="{{old('manager_name')}}">
                             <small class="form-text text-muted">You can enter Name here</small>
                         </div>
                         <div class="form-group">
                             <label>Surname: </label>
-                            <input type="text" class="form-control" name="manager_surname">
+                            <input type="text" class="form-control" name="manager_surname" value="{{old('manager_surname')}}">
                             <small class="form-text text-muted">You can enter Surname here</small>
                         </div>
                         <label>Choose specie: </label>

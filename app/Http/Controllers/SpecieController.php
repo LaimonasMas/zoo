@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Specie;
 use Illuminate\Http\Request;
+use Validator;
 
 class SpecieController extends Controller
 {
@@ -36,6 +37,21 @@ class SpecieController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'specie_name' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'specie_name.min' => 'Specie name has to be at least 3 characters.',
+                'specie_name.required' => 'Specie name has to be entered.'
+            ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
         $specie = new Specie;
         $specie->name = $request->specie_name;
         $specie->save();
@@ -73,6 +89,21 @@ class SpecieController extends Controller
      */
     public function update(Request $request, Specie $specie)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'specie_name' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'specie_name.min' => 'Specie name has to be at least 3 characters.',
+                'specie_name.required' => 'Specie name has to be entered.'
+            ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+        
         $specie->name = $request->specie_name;
         $specie->save();
         return redirect()->route('specie.index')->with('success_message', 'Updated successfully.');
@@ -87,11 +118,10 @@ class SpecieController extends Controller
     public function destroy(Specie $specie)
     {
 
-        if($specie->specieManagers->count()){
-            return 'Could not delete, because specie still has managers or animals.';
+        if ($specie->specieManagers->count()) {
+            return redirect()->route('specie.index')->with('info_message', 'Could not delete, because specie still has managers.');
         }
         $specie->delete();
-        return redirect()->route('specie.index')->with('info_message', 'Could not delete, because specie still has managers or animals');
-
+        return redirect()->route('specie.index')->with('success_message', 'Deleted Successfully.');
     }
 }

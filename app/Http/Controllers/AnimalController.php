@@ -6,6 +6,7 @@ use App\Models\Animal;
 use App\Models\Specie;
 use App\Models\Manager;
 use Illuminate\Http\Request;
+use Validator;
 
 class AnimalController extends Controller
 {
@@ -41,6 +42,27 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'animal_name' => ['required', 'min:3', 'max:64'],
+                'birth_year' => ['required', 'min:3', 'max:64'],
+                'animal_book' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'animal_name.min' => 'Animal name has to be at least 3 characters.',
+                'animal_name.required' => 'Animal name has to be entered.',
+                'birth_year.min' => 'Animal birth year has to be at least 3 characters.',
+                'birth_year.required' => 'Animal birth year has to be entered.',
+                'animal_book.min' => 'Description has to be at least 3 characters.',
+                'animal_book.required' => 'Description has to be entered.'
+            ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
         $animal = new Animal;
         $animal->name = $request->animal_name;
         $animal->birth_year = $request->birth_year;
@@ -85,6 +107,27 @@ class AnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'animal_name' => ['required', 'min:3', 'max:64'],
+                'birth_year' => ['required', 'min:3', 'max:64'],
+                'animal_book' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'animal_name.min' => 'Animal name has to be at least 3 characters.',
+                'animal_name.required' => 'Animal name has to be entered.',
+                'birth_year.min' => 'Animal birth year has to be at least 3 characters.',
+                'birth_year.required' => 'Animal birth year has to be entered.',
+                'animal_book.min' => 'Description has to be at least 3 characters.',
+                'animal_book.required' => 'Description has to be entered.'
+            ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+        
         $animal->name = $request->animal_name;
         $animal->birth_year = $request->birth_year;
         $animal->animal_book = $request->animal_book;

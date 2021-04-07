@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Manager;
 use App\Models\Specie;
 use Illuminate\Http\Request;
+use Validator;
 
 class ManagerController extends Controller
 {
@@ -38,6 +39,24 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'manager_name' => ['required', 'min:3', 'max:64'],
+                'manager_surname' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'manager_name.min' => 'Manager name has to be at least 3 characters.',
+                'manager_name.required' => 'Manager name has to be entered.',
+                'manager_surname.min' => 'Manager surname has to be at least 3 characters.',
+                'manager_surname.required' => 'Manager surname has to be entered.'
+            ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
         $manager = new Manager;
         $manager->name = $request->manager_name;
         $manager->surname = $request->manager_surname;
@@ -78,6 +97,24 @@ class ManagerController extends Controller
      */
     public function update(Request $request, Manager $manager)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'manager_name' => ['required', 'min:3', 'max:64'],
+                'manager_surname' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'manager_name.min' => 'Manager name has to be at least 3 characters.',
+                'manager_name.required' => 'Manager name has to be entered.',
+                'manager_surname.min' => 'Manager surname has to be at least 3 characters.',
+                'manager_surname.required' => 'Manager surname has to be entered.'
+            ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
         $manager->name = $request->manager_name;
         $manager->surname = $request->manager_surname;
         $manager->specie_id = $request->specie_id;
@@ -93,6 +130,9 @@ class ManagerController extends Controller
      */
     public function destroy(Manager $manager)
     {
+        if ($manager->managerAnimals()->count()) {
+            return redirect()->route('manager.index')->with('info_message', 'Could not delete, because manager still has animals.');
+        }
         $manager->delete();
         return redirect()->route('manager.index')->with('success_message', 'Deleted successfully.');
     }
